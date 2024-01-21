@@ -18,15 +18,19 @@ class Allergie
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
     #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'mentionDesAllergies')]
     private Collection $reservations;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'mentionDesAllergies')]
+    private Collection $users;
+
+    #[ORM\Column]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,17 +50,6 @@ class Allergie
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Reservation>
@@ -81,6 +74,45 @@ class Allergie
         if ($this->reservations->removeElement($reservation)) {
             $reservation->removeMentionDesAllergy($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addMentionDesAllergy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeMentionDesAllergy($this);
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -34,6 +34,9 @@ class Reservation
     #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'reservations')]
     private Collection $mentionDesAllergies;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
+
     public function __construct()
     {
         $this->mentionDesAllergies = new ArrayCollection();
@@ -124,6 +127,18 @@ class Reservation
     public function removeMentionDesAllergy(Allergie $mentionDesAllergy): static
     {
         $this->mentionDesAllergies->removeElement($mentionDesAllergy);
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
