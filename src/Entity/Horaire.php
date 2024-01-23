@@ -17,20 +17,20 @@ class Horaire
     #[ORM\Column(length: 255)]
     private ?string $nomDuJour = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $ouvertureMidi = null;
+    #[ORM\Column(length: 255)]
+    private ?string $ouvertureMidi = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $fermetureMidi = null;
+    #[ORM\Column(length: 255)]
+    private ?string $fermetureMidi = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $ouvertureSoir = null;
+    #[ORM\Column(length: 255)]
+    private ?string $ouvertureSoir = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $fermetureSoir = null;
+    #[ORM\Column(length: 255)]
+    private ?string $fermetureSoir = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int
     {
@@ -49,64 +49,64 @@ class Horaire
         return $this;
     }
 
-    public function getOuvertureMidi(): ?\DateTimeInterface
+    public function getOuvertureMidi(): ?string
     {
         return $this->ouvertureMidi;
     }
 
-    public function setOuvertureMidi(?\DateTimeInterface $ouvertureMidi): static
+    public function setOuvertureMidi(?string $ouvertureMidi): static
     {
         $this->ouvertureMidi = $ouvertureMidi;
 
         return $this;
     }
 
-    public function getFermetureMidi(): ?\DateTimeInterface
+    public function getFermetureMidi(): ?string
     {
         return $this->fermetureMidi;
     }
 
-    public function setFermetureMidi(?\DateTimeInterface $fermetureMidi): static
+    public function setFermetureMidi(?string $fermetureMidi): static
     {
         $this->fermetureMidi = $fermetureMidi;
 
         return $this;
     }
 
-    public function getOuvertureSoir(): ?\DateTimeInterface
+    public function getOuvertureSoir(): ?string
     {
         return $this->ouvertureSoir;
     }
 
-    public function setOuvertureSoir(?\DateTimeInterface $ouvertureSoir): static
+    public function setOuvertureSoir(?string $ouvertureSoir): static
     {
         $this->ouvertureSoir = $ouvertureSoir;
 
         return $this;
     }
 
-    public function getFermetureSoir(): ?\DateTimeInterface
+    public function getFermetureSoir(): ?string
     {
         return $this->fermetureSoir;
     }
 
-    public function setFermetureSoir(?\DateTimeInterface $fermetureSoir): static
+    public function setFermetureSoir(?string $fermetureSoir): static
     {
         $this->fermetureSoir = $fermetureSoir;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
-
+ 
 }

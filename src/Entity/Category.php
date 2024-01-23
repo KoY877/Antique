@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageRepository;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ImageRepository::class)]
-class Image
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,14 +19,19 @@ class Image
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $file = null;
+    #[ORM\ManyToMany(targetEntity: Plat::class, mappedBy: 'categories')]
+    private Collection $plats;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    public function __construct()
+    {
+        $this->plats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,14 +50,29 @@ class Image
         return $this;
     }
 
-    public function getFile(): ?string
+    /**
+     * @return Collection<int, Plat>
+     */
+    public function getPlats(): Collection
     {
-        return $this->file;
+        return $this->plats;
     }
 
-    public function setFile(string $file): static
+    public function addPlat(Plat $plat): static
     {
-        $this->file = $file;
+        if (!$this->plats->contains($plat)) {
+            $this->plats->add($plat);
+            $plat->addCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlat(Plat $plat): static
+    {
+        if ($this->plats->removeElement($plat)) {
+            $plat->removeCategories($this);
+        }
 
         return $this;
     }
@@ -77,5 +99,10 @@ class Image
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getNom();
     }
 }
