@@ -9,10 +9,22 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public static function loadValidatorMetadata(ClassMetadata $metadata) {
+        $metadata->addPropertyConstraint('rawPassword', new NotCompromisedPassword(
+            ['message' => 'Le mot de passe doit contenir au moins 12 caractère',]
+        ));
+    }
+
+    private $rawPassword;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,16 +40,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Length(['min'=> 12, 'max' => 99])] // Mot de passe au moins 12 caractère
     private ?string $password = null;
-
-    #[ORM\Column]
-    private ?int $nombreDeConvive = null;
-
-    #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'users')]
-    private Collection $mentionDesAllergies;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $nombreDeConvives = null;
+
+    #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'users')]
+    private Collection $mentionDesAllergies;
 
     public function __construct()
     {
@@ -105,6 +118,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getRawPassword():string
+    {
+        return $this->rawPassword;
+    }
+
+    public function setRawPassword(string $rawPassword):self
+    {
+        $this->rawPassword = $rawPassword;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -114,14 +139,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getNombreDeConvive(): ?int
+
+
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->nombreDeConvive;
+        return $this->createdAt;
     }
 
-    public function setNombreDeConvive(int $nombreDeConvive): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
-        $this->nombreDeConvive = $nombreDeConvive;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getNombreDeConvives(): ?int
+    {
+        return $this->nombreDeConvives;
+    }
+
+    public function setNombreDeConvives(?int $nombreDeConvives): static
+    {
+        $this->nombreDeConvives = $nombreDeConvives;
 
         return $this;
     }
@@ -146,18 +185,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeMentionDesAllergy(Allergie $mentionDesAllergy): static
     {
         $this->mentionDesAllergies->removeElement($mentionDesAllergy);
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

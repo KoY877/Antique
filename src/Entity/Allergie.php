@@ -22,14 +22,16 @@ class Allergie
     #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'mentionDesAllergies')]
     private Collection $reservations;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'mentionDesAllergies')]
-    private Collection $users;
+   
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'mentionDesAllergies')]
+    private Collection $users;
 
     public function __construct()
     {
@@ -82,33 +84,6 @@ class Allergie
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addMentionDesAllergy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeMentionDesAllergy($this);
-        }
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -136,5 +111,32 @@ class Allergie
     public function __toString()
     {
         return (string) $this->getNom();
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addMentionDesAllergy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeMentionDesAllergy($this);
+        }
+
+        return $this;
     }
 }
