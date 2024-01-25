@@ -7,19 +7,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public static function loadValidatorMetadata(ClassMetadata $metadata) {
+       
         $metadata->addPropertyConstraint('rawPassword', new NotCompromisedPassword(
-            ['message' => 'Le mot de passe doit contenir au moins 12 caractère',]
+            ['message' => 'Le mot de passe doit contenir au moins 12 caractères',]
         ));
     }
 
@@ -31,6 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Email()]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -41,6 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Length(['min'=> 12, 'max' => 99])] // Mot de passe au moins 12 caractère
+    #[PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_STRONG, // Very strong password required
+    ])]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

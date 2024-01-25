@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use Composer\Semver\Constraint\Constraint;
 use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -13,8 +14,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormEvents;
@@ -43,7 +44,10 @@ class UserCrudController extends AbstractCrudController
     {
         $fields = [
             IdField::new('id')->hideOnForm(),
-            EmailField::new('email', 'Email'),
+            EmailField::new('email', 'Email', [
+                'type' => EmailType::class,
+
+            ]),
             TextField::new('password')
                         ->setFormType(RepeatedType::class)
                         ->setFormTypeOptions([
