@@ -1,17 +1,207 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+        
+        <title>Quais Antique</title>
 
-        {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Cache-Control" content="private, must-revalidate, max-age=300">
+        <meta name="description" content="Découvrez la richesse des produits et des producteurs de la magnifique région de la Savoie sur le tout nouveau site web du restaurant "Quai Antique" situé à Chambéry. Ce restaurant vous invite à une expérience gastronomique authentique, mettant en avant une cuisine sans artifice, mettant en valeur les délices de la Savoie.">
+
+        {% block stylesheets %}
+            <!-- Google font -->
+            {# <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet"> #}
+
+            <!-- Bootstrap -->
+            {# <link rel="stylesheet" href="assets/bootstrap.min-css">
+            <link rel="stylesheet" href="assets/carousel.rtl.css"> #}
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+            <!-- Main Stylesheets -->
+            <link rel="stylesheet" href="{{asset('css/style.css')}}" />
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+        {% endblock %}   
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {# <!-- Header section -->
+        <div class="header">
+            <nav class="navbar navbar-expand-lg p-4">
+                <div class="container-fluid ">
+                    <a class="navbar-brand text-white" href="#"><img src="{{asset('img/logo.png')}}" class="logo" alt="logo"></a>
+                    <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="text-white"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link Color"  href="{{'/'}}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link Color" href="{{'/carte'}}">Carte</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link Color" href="{{'/menu'}}">Menu</a>
+                            </li>
+                            
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item">
+                                    <a class="nav-link Color" href="{{path('app_client_index')}}">Utilisateurs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link Color" href="{{path('app_reservation.table')}}">Réservations</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link Color dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Créer
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{path('app_galerie.modifier')}}">Galerie</a></li>
+                                        <li><a class="dropdown-item" href="{{path('app_carte.afficher_plat')}}">Catégories/Plats</a></li>
+                                        <li><a class="dropdown-item" href="{{path('app_menu.afficher')}}">Menu</a></li>
+                                        <li><a class="dropdown-item" href="{{path('app_res_table.table_list')}}">Table</a></li>
+                                        <li><a class="dropdown-item" href="{{path('app_horaire.afficher')}}">Horaire</a></li>
+                                        <li><a class="dropdown-item" href="{{path('app_inscription')}}"> Inscrire un admin</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                           
+                            <a class="nav-link Color2" href="{{path('app_login')}}">Se connecter </a>
+                            &#160;&#160;                                
+                            <a class="nav-link Color2" href="{{path('app_client_new')}}"> S´inscrire</a>
+                               
+                        {% endif %}
+
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <ul>
+                                <li class="nav-item dropdown icons">
+                                    <a class="nav-link Color dropdown-toggle Color2 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-fill"></i>
+                                    </a>
+                                    
+                                    <ul class="dropdown-menu ">
+                                        <li>
+                                            <a class="dropdown-item" >{{app.user.email}}</a>
+                                        </li>
+                                        
+                                        {% if app.user %}
+                                            <li>
+                                                <a class="dropdown-item" href="{{ path('app_client_edit', {'id': app.user.id}) }}">Profile</a>
+                                            </li>
+                                        {% endif %}
+                                        
+                                        <li>
+                                            <a class="dropdown-item" href="{{'/logout'}}">Se déconnecter </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- End Header section --> #}
+
+        {% if message is defined %}
+                <div class="alert alert-danger">
+                        {{ message }}
+                </div>
+        {% endif %}
+
+        {% block csrf_token_widget %} {% endblock %}
+
+        {# <!-- Footer section -->
+        <footer class="footer-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7 order-lg-2 mb-2">
+                        <div class="row">
+                            <div class="col-sm-2 mb-4">
+                                <div class="footer-widget">
+                                    <h2>A propos</h2>
+                                    <ul class="col_margin">
+                                        <li><a href="" class="link">Bienvenue</a></li> &nbsp;
+                                        <li><a href="" class="link">Carte</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-4">
+                                <div class="footer-widget">
+                                    <h2>Nos horaire d´ouverture</h2>
+                                    
+                                    {% for horaire in affHoraires %}
+                                        {% if (horaire.isOpen == true) %}
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4 horaire">
+                                                    {{horaire.day}}    
+                                                </div>  
+                                                <div class="col-md-8 col-sm-8 horaire"> 
+                                                    {{horaire.MStartTime|format_time(pattern='HH:mm')}} - {{horaire.MEndTime|format_time(pattern='HH:mm')}} &nbsp; / &nbsp; {{horaire.SStartTime|format_time(pattern='HH:mm')}} - {{horaire.SEndTime|format_time(pattern='HH:mm')}}
+                                                </div>
+                                            </div>
+                                        {% else %} 
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4 horaire">
+                                                    {{horaire.day}}    
+                                                </div>  
+                                                <div class="col-md-8 col-sm-8 horaire"> 
+                                                    Fermée
+                                                </div>
+                                            </div>
+                                        {% endif %}                                       
+                                    {% endfor %}                                      
+                                    
+                                </div>
+                            </div>
+                            <div class="col-sm-2 mb-4">
+                                <div class="footer-widget ">
+                                    <h2 class="contact">contact</h2>
+                                    <ul class="col_margin">
+                                        <li><a href="" class="link">Impressum</a></li> &nbsp;
+                                        <li><a href="" class="link">Login</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5 order-lg-1 mb-2">
+                        <img src="{{('img/logo2.png')}}" alt="" class="logo">
+                        <div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="bi bi-arrow-through-heart-fill"></i> by KoumoDjo Monni
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+                        <div class="social-links">
+                            <a href=""><i class="bi bi-instagram"></i></a>
+                            <a href=""><i class="bi bi-pinterest"></i></a>
+                            <a href=""><i class="bi bi-facebook"></i></a>
+                            <a href=""><i class="bi bi-twitter"></i></a>
+                            <a href=""><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>				
+                </div>            
+            </div>
+        </footer>
+        <!-- Footer section end --> #}
+
+        <!-- script -->
+        {# // <script src="assets/bootstrap.bundle.min.js"></script> #}
+
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        
+
+        <!-- owl carousel -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="{{asset('js/main.js')}}"> </script>
     </body>
 </html>

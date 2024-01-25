@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Allergie;
 use App\Entity\User;
+use Composer\Semver\Constraint\Constraint;
 use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -11,10 +13,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormEvents;
@@ -43,7 +47,10 @@ class UserCrudController extends AbstractCrudController
     {
         $fields = [
             IdField::new('id')->hideOnForm(),
-            EmailField::new('email', 'Email'),
+            EmailField::new('email', 'Email', [
+                'type' => EmailType::class,
+
+            ]),
             TextField::new('password')
                         ->setFormType(RepeatedType::class)
                         ->setFormTypeOptions([
@@ -54,6 +61,11 @@ class UserCrudController extends AbstractCrudController
                         ])
                         ->setRequired($pageName === Crud::PAGE_NEW)
                         ->onlyOnForms(),
+            NumberField::new('nombreDeConvives')->onlyOnIndex(),
+            AssociationField::new('mentionDesAllergies')
+                            ->setFormTypeOptions([
+                                'type' => Allergie::class  
+                            ])->onlyOnIndex(),
         ];
 
         return $fields;
@@ -112,7 +124,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $crud
                 ->setPageTitle('index', 'Utilisateurs')
-                ->setPageTitle('edit', 'Editer les Utilisateurs')
+                ->setPageTitle('edit', 'Editer un Utilisateur')
                 ->setPageTitle('new', 'Créer un utilisateur');
     }
 }
