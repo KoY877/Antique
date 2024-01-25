@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Allergie;
 use App\Entity\User;
 use Composer\Semver\Constraint\Constraint;
 use DateTime;
@@ -12,8 +13,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -58,6 +61,11 @@ class UserCrudController extends AbstractCrudController
                         ])
                         ->setRequired($pageName === Crud::PAGE_NEW)
                         ->onlyOnForms(),
+            NumberField::new('nombreDeConvives')->onlyOnIndex(),
+            AssociationField::new('mentionDesAllergies')
+                            ->setFormTypeOptions([
+                                'type' => Allergie::class  
+                            ])->onlyOnIndex(),
         ];
 
         return $fields;
@@ -116,7 +124,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $crud
                 ->setPageTitle('index', 'Utilisateurs')
-                ->setPageTitle('edit', 'Editer les Utilisateurs')
+                ->setPageTitle('edit', 'Editer un Utilisateur')
                 ->setPageTitle('new', 'Créer un utilisateur');
     }
 }
