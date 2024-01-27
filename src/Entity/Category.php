@@ -19,14 +19,15 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity: Plat::class, mappedBy: 'categories')]
-    private Collection $plats;
-
+   
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Plat::class, orphanRemoval: true)]
+    private Collection $plats;
 
     public function __construct()
     {
@@ -48,34 +49,7 @@ class Category
         $this->nom = $nom;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Plat>
-     */
-    public function getPlats(): Collection
-    {
-        return $this->plats;
-    }
-
-    public function addPlat(Plat $plat): static
-    {
-        if (!$this->plats->contains($plat)) {
-            $this->plats->add($plat);
-            $plat->addCategories($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlat(Plat $plat): static
-    {
-        if ($this->plats->removeElement($plat)) {
-            $plat->removeCategories($this);
-        }
-
-        return $this;
-    }
+    }   
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -104,5 +78,35 @@ class Category
     public function __toString()
     {
         return (string) $this->getNom();
+    }
+
+    /**
+     * @return Collection<int, Plat>
+     */
+    public function getPlats(): Collection
+    {
+        return $this->plats;
+    }
+
+    public function addPlat(Plat $plat): static
+    {
+        if (!$this->plats->contains($plat)) {
+            $this->plats->add($plat);
+            $plat->setCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlat(Plat $plat): static
+    {
+        if ($this->plats->removeElement($plat)) {
+            // set the owning side to null (unless already changed)
+            if ($plat->getCategories() === $this) {
+                $plat->setCategories(null);
+            }
+        }
+
+        return $this;
     }
 }

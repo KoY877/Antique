@@ -31,12 +31,13 @@ class Plat
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'plats')]
-    private Collection $categories;
+    #[ORM\ManyToOne(inversedBy: 'plats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $categories = null;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -104,43 +105,17 @@ class Plat
         return $this;
     }
 
-    /**
-     * @return Collection<int, categories>
-     */
-    public function getCategories(): Collection
+    public function getCategories(): ?Category
     {
         return $this->categories;
     }
 
-    public function addCategories(Category $categories): static
+    public function setCategories(?Category $categories): static
     {
-        if (!$this->categories->contains($categories)) {
-            $this->categories->add($categories);
-        }
+        $this->categories = $categories;
 
         return $this;
     }
 
-    public function removeCategories(Category $categories): static
-    {
-        $this->categories->removeElement($categories);
-
-        return $this;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        $this->categories->removeElement($category);
-
-        return $this;
-    }
+    
 }

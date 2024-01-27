@@ -63,9 +63,7 @@ class UserCrudController extends AbstractCrudController
                         ->onlyOnForms(),
             NumberField::new('nombreDeConvives')->onlyOnIndex(),
             AssociationField::new('mentionDesAllergies')
-                            ->setFormTypeOptions([
-                                'type' => Allergie::class  
-                            ])->onlyOnIndex(),
+                            ->onlyOnIndex(),
         ];
 
         return $fields;
@@ -124,7 +122,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $crud
                 ->setPageTitle('index', 'Utilisateurs')
-                ->setPageTitle('edit', 'Editer un Utilisateur')
+                ->setPageTitle('edit', 'Modifier un Utilisateur')
                 ->setPageTitle('new', 'Créer un utilisateur');
     }
 }

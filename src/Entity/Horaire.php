@@ -18,16 +18,15 @@ class Horaire
     private ?string $nomDuJour = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $ouvertureMidi = null;
+    private ?string $slug = null;
+
 
     #[ORM\Column(length: 255)]
-    private ?string $fermetureMidi = null;
+    private ?string $midi = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $ouvertureSoir = null;
+    private ?string $soir = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $fermetureSoir = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -49,50 +48,26 @@ class Horaire
         return $this;
     }
 
-    public function getOuvertureMidi(): ?string
+    public function getMidi(): ?string
     {
-        return $this->ouvertureMidi;
+        return $this->midi;
     }
 
-    public function setOuvertureMidi(?string $ouvertureMidi): static
+    public function setMidi(?string $ouvertureMidi): static
     {
-        $this->ouvertureMidi = $ouvertureMidi;
+        $this->midi = $ouvertureMidi;
 
         return $this;
     }
 
-    public function getFermetureMidi(): ?string
+    public function getSoir(): ?string
     {
-        return $this->fermetureMidi;
+        return $this->soir;
     }
 
-    public function setFermetureMidi(?string $fermetureMidi): static
+    public function setSoir(?string $fermetureSoir): static
     {
-        $this->fermetureMidi = $fermetureMidi;
-
-        return $this;
-    }
-
-    public function getOuvertureSoir(): ?string
-    {
-        return $this->ouvertureSoir;
-    }
-
-    public function setOuvertureSoir(?string $ouvertureSoir): static
-    {
-        $this->ouvertureSoir = $ouvertureSoir;
-
-        return $this;
-    }
-
-    public function getFermetureSoir(): ?string
-    {
-        return $this->fermetureSoir;
-    }
-
-    public function setFermetureSoir(?string $fermetureSoir): static
-    {
-        $this->fermetureSoir = $fermetureSoir;
+        $this->soir = $fermetureSoir;
 
         return $this;
     }
@@ -108,5 +83,17 @@ class Horaire
 
         return $this;
     }
- 
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 }

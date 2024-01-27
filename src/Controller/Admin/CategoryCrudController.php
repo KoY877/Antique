@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Allergie;
+use App\Entity\Category;
 use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -14,19 +14,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AllergieCrudController extends AbstractCrudController
+class CategoryCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Allergie::class;
+        return Category::class;
     }
 
    
-    
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -37,6 +37,7 @@ class AllergieCrudController extends AbstractCrudController
         ];
     }
 
+    
     public function configureActions(Actions $actions): Actions
     {
         return $actions->add(Crud::PAGE_EDIT, Action::INDEX)
@@ -76,9 +77,8 @@ class AllergieCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-                ->setPageTitle('index', 'Types d´allegies')
-                ->setPageTitle('edit', 'Modifier une allergie')
-                ->setPageTitle('new', 'Créer une allergie');
+                ->setPageTitle('index', 'Catégories de plats')
+                ->setPageTitle('edit', 'Modifier une catégorie')
+                ->setPageTitle('new', 'Créer une catégorie');
     }
-
 }
