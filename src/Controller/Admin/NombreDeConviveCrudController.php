@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Allergie;
+use App\Entity\NombreDeConvive;
 use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -13,42 +13,35 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 
-class AllergieCrudController extends AbstractCrudController
+class NombreDeConviveCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Allergie::class;
+        return NombreDeConvive::class;
     }
 
-   
-    
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
+            NumberField::new('nombreDePlaceDisponible'),
             DateField::new('createdAt')->hideOnForm(),
         ];
     }
 
+    
     public function configureActions(Actions $actions): Actions
     {
-        return $actions->add(Crud::PAGE_EDIT, Action::INDEX)
-                    ->add(Crud::PAGE_INDEX, Action::DETAIL)
-                    ->add(Crud::PAGE_EDIT, Action::DETAIL);
+        return $actions->add(Crud::PAGE_INDEX, Action::DETAIL)
+                    ->disable(Action::DELETE, Action::NEW);
     }
 
-    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
-    {
-        $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
-        return $this->addFormEventListener($formBuilder);
-    }
+   
 
     public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
     {
@@ -76,9 +69,7 @@ class AllergieCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-                ->setPageTitle('index', 'Types d´allegies')
-                ->setPageTitle('edit', 'Modifier une allergie')
-                ->setPageTitle('new', 'Créer une allergie');
+                ->setPageTitle('index', 'Nombre de place disponible')
+                ->setPageTitle('edit', 'Modifier le nombre de places disponibles');
     }
-
 }

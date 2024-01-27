@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Allergie;
+use App\Entity\Image;
 use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -13,25 +13,31 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class AllergieCrudController extends AbstractCrudController
+class ImageCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Allergie::class;
+        return Image::class;
     }
 
-   
     
     public function configureFields(string $pageName): iterable
     {
+        $mappingsParams = $this->getParameter('vich_uploader.mappings');
+        $dishesImagePath =  $mappingsParams['dishes']['uri_prefix'];
+
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nom'),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating(),
+            ImageField::new('file')->setBasePath($dishesImagePath)->onlyOnIndex(),
             SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
             DateField::new('createdAt')->hideOnForm(),
         ];
@@ -76,9 +82,10 @@ class AllergieCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-                ->setPageTitle('index', 'Types d´allegies')
-                ->setPageTitle('edit', 'Modifier une allergie')
-                ->setPageTitle('new', 'Créer une allergie');
+                ->setPageTitle('index', 'Galerie')
+                ->setPageTitle('edit', 'Modifier une image')
+                ->setPageTitle('new', 'Créer une image')
+                ->setDefaultSort(['createdAt' => 'DESC']) // Ordonner les plats
+                ;
     }
-
 }
