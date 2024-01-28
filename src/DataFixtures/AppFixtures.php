@@ -15,7 +15,6 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
@@ -37,7 +36,7 @@ class AppFixtures extends Fixture
 
         $user->setEmail('user@test.com')
             ->setRoles(['ROLE_ADMIN'])
-            ->setNombreDeConvive($faker->numberBetween($min = 1, $max = 50))
+            ->setNombreDeConvives($faker->numberBetween($min = 1, $max = 50))
             ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
         ;
 
@@ -50,7 +49,7 @@ class AppFixtures extends Fixture
         $NombreDeConvive = new NombreDeConvive();
 
         $NombreDeConvive->setNombreDePlaceDisponible(40)
-             ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
+            ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
         ;
 
         $manager->persist($NombreDeConvive);
@@ -61,7 +60,8 @@ class AppFixtures extends Fixture
 
             $categorie->setNom($faker->numerify('categorie-####'))
                 ->setSlug($faker->slug())
-                ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'));
+                ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
+            ;
 
             $manager->persist($categorie);
         }
@@ -75,7 +75,8 @@ class AppFixtures extends Fixture
                 ->setPrix($faker->numberBetween($min = 1000, $max = 9000))
                 ->setSlug($faker->numerify('Salomon-####'))
                 ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
-                ->addCategories($categorie);
+                ->setCategories($categorie)
+            ;
 
             $manager->persist($plat);
         }
@@ -85,7 +86,7 @@ class AppFixtures extends Fixture
             $allergie = new Allergie();
 
             $allergie->setNom($faker->numerify('allergie-####'))
-                    ->setSlug($faker->slug())
+                    ->setSlug($faker->numerify('allergie-####'))
                     ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'));
 
             $manager->persist($allergie);
@@ -104,7 +105,6 @@ class AppFixtures extends Fixture
                         ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
             ;
     
-
             $manager->persist($reservation);
         }
 
@@ -125,17 +125,13 @@ class AppFixtures extends Fixture
             $horaire = new Horaire();
 
             $horaire->setNomDuJour($faker->numerify('Jour-####'))
-                ->setOuvertureMidi($faker->time())
-                ->setFermetureMidi($faker->time())
-                ->setOuvertureSoir($faker->time())
-                ->setFermetureSoir($faker->time())
+                ->setMidi($faker->time())
+                ->setSoir($faker->time())
+                ->setSlug($faker->numerify('Jour-####'))
                 ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'));
 
             $manager->persist($horaire);
         }
-
-        
-       
 
         $manager->flush();
     }

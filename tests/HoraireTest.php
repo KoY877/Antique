@@ -15,18 +15,14 @@ class HoraireTest extends TestCase
         $datetime = new Datetime();
 
         $horaire->setNomDuJour('nom')
-                ->setOuvertureMidi($datetime)
-                ->setFermetureMidi($datetime)
-                ->setOuvertureSoir($datetime)
-                ->setFermetureSoir($datetime)
+                ->setMidi('12:00 - 14:00')
+                ->setSoir('18:00 - 22:00')
                 ->setCreatedAt($datetime)
         ;
 
         $this->assertTrue($horaire->getNomDuJour() === 'nom');
-        $this->assertTrue($horaire->getOuvertureMidi() === $datetime);
-        $this->assertTrue($horaire->getFermetureMidi() === $datetime);
-        $this->assertTrue($horaire->getOuvertureSoir() === $datetime);
-        $this->assertTrue($horaire->getFermetureSoir() === $datetime);
+        $this->assertTrue($horaire->getMidi() === '12:00 - 14:00');
+        $this->assertTrue($horaire->getSoir() === '18:00 - 22:00');
         $this->assertTrue($horaire->getCreatedAt() === $datetime);
     }
 
@@ -36,18 +32,15 @@ class HoraireTest extends TestCase
         $datetime = new Datetime();
 
         $horaire->setNomDuJour('nom')
-                ->setOuvertureMidi($datetime)
-                ->setFermetureMidi($datetime)
-                ->setOuvertureSoir($datetime)
-                ->setFermetureSoir($datetime)
+                ->setMidi('12:00 - 14:00')
+                ->setSoir('18:00 - 22:00')
                 ->setCreatedAt($datetime)
         ;
 
+
         $this->assertFalse($horaire->getNomDuJour() === 'false');
-        $this->assertFalse($horaire->getOuvertureMidi() === new Datetime());
-        $this->assertFalse($horaire->getFermetureMidi() === new Datetime());
-        $this->assertFalse($horaire->getOuvertureSoir() === new Datetime());
-        $this->assertFalse($horaire->getFermetureSoir() === new Datetime());
+        $this->assertFalse($horaire->getMidi() === 'false');
+        $this->assertFalse($horaire->getSoir() === 'false');
         $this->assertFalse($horaire->getCreatedAt() === new Datetime());
     }
 
@@ -56,10 +49,8 @@ class HoraireTest extends TestCase
         $horaire = new Horaire();
 
         $this->assertEmpty($horaire->getNomDuJour());
-        $this->assertEmpty($horaire->getOuvertureMidi());
-        $this->assertEmpty($horaire->getFermetureMidi());
-        $this->assertEmpty($horaire->getOuvertureSoir());
-        $this->assertEmpty($horaire->getFermetureSoir());
+        $this->assertEmpty($horaire->getMidi());
+        $this->assertEmpty($horaire->getSoir());
         $this->assertEmpty($horaire->getCreatedAt());
     }
 }

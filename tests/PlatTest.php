@@ -20,14 +20,14 @@ class PlatTest extends TestCase
             ->setDescription('description')
             ->setPrix(23.60)
             ->setSlug('slug')
-            ->addCategories($categorie)
+            ->setCategories($categorie)
             ->setCreatedAt($datetime)
         ;
 
         $this->assertTrue($plat->getNom() === 'nom');
         $this->assertTrue($plat->getDescription() === 'description');
         $this->assertTrue($plat->getPrix() === 23.60);
-        $this->assertContains($categorie, $plat->getCategories());
+        $this->assertTrue($plat->getCategories() === $categorie);
         $this->assertTrue($plat->getSlug() === 'slug');
         $this->assertTrue($plat->getCreatedAt() === $datetime);
     }
@@ -42,14 +42,14 @@ class PlatTest extends TestCase
             ->setDescription('description')
             ->setPrix(23)
             ->setSlug('slug')
-            ->addCategories($categorie)
+            ->setCategories($categorie)
             ->setCreatedAt($datetime)
         ;
 
         $this->assertFalse($plat->getNom() === 'false');
         $this->assertFalse($plat->getDescription() === 'false');
         $this->assertFalse($plat->getPrix() === 5);
-        $this->assertNotContains(new Category, $plat->getCategories());
+        $this->assertFalse($plat->getCategories() === new Category);
         $this->assertFalse($plat->getSlug() === 'false');
         $this->assertFalse($plat->getCreatedAt() === new DateTime());
     }
