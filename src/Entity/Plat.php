@@ -35,11 +35,6 @@ class Plat
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $categories = null;
 
-    public function __construct()
-    {
-       
-    }
-
     public function getId(): ?int
     {
         return $this->id;

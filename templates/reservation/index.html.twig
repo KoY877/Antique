@@ -14,30 +14,43 @@
             </div>
 
             <div class="col-md-6">
-                <h2>S´inscrire</h2>
+                <h2>Réservation</h2>
                 <br>
-                {{form_start (inscription)}}
+                {{form_start (reservation)}}
                     <div class="row">
                         <div class="">
-                            {{form_row(inscription.email)}} 
+                            {{form_row(reservation.nom)}} 
                         </div>
                     </div>
                     <div class="row">
                         <div class="">
-                            {{form_row(inscription.password)}} 
+                            {{form_row(reservation.nombreDeConvive)}} 
                         </div>
                     </div>
                     <div class="row">
                         <div class="">
-                            {{form_row(inscription.nombreDeConvives)}} 
+                            {{form_row(reservation.date)}} 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <h6>Réservation á : </h6>
+                                <div class="col-md-3 m-0 ">
+                                    {{form_row(reservation.heurePrevue)}} 
+                                </div>
+                                <div class="col-md-3 m-0 ">
+                                    {{form_row(reservation.minutePrevue)}} 
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="">
-                            {{form_row(inscription.mentionDesAllergie)}} 
+                            {{form_row(reservation.mentionDesAllergies)}} 
                         </div>
                     </div>
-                {{form_end (inscription)}}
+                {{form_end (reservation)}}
             </div>
 
             <div class="col-md-3">

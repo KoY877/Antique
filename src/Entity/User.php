@@ -58,13 +58,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $nombreDeConvives = null;
 
-    #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'users')]
-    private Collection $mentionDesAllergies;
-
-    public function __construct()
-    {
-        $this->mentionDesAllergies = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mentionDesAllergie = null;
 
     public function getId(): ?int
     {
@@ -174,27 +169,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Allergie>
-     */
-    public function getMentionDesAllergies(): Collection
+    public function getMentionDesAllergie(): ?string
     {
-        return $this->mentionDesAllergies;
+        return $this->mentionDesAllergie;
     }
 
-    public function addMentionDesAllergy(Allergie $mentionDesAllergy): static
+    public function setMentionDesAllergie(?string $mentionDesAllergie): static
     {
-        if (!$this->mentionDesAllergies->contains($mentionDesAllergy)) {
-            $this->mentionDesAllergies->add($mentionDesAllergy);
-        }
+        $this->mentionDesAllergie = $mentionDesAllergie;
 
         return $this;
     }
 
-    public function removeMentionDesAllergy(Allergie $mentionDesAllergy): static
-    {
-        $this->mentionDesAllergies->removeElement($mentionDesAllergy);
-
-        return $this;
-    }
 }

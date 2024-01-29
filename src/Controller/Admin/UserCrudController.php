@@ -40,7 +40,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $actions->add(Crud::PAGE_EDIT, Action::INDEX)
                     ->add(Crud::PAGE_INDEX, Action::DETAIL)
-                    ->add(Crud::PAGE_EDIT, Action::DETAIL);   
+                    ->add(Crud::PAGE_EDIT, Action::DETAIL);
     }
 
     public function configureFields(string $pageName): iterable
@@ -61,9 +61,8 @@ class UserCrudController extends AbstractCrudController
                         ])
                         ->setRequired($pageName === Crud::PAGE_NEW)
                         ->onlyOnForms(),
-            NumberField::new('nombreDeConvives')->onlyOnIndex(),
-            AssociationField::new('mentionDesAllergies')
-                            ->onlyOnIndex(),
+            NumberField::new('nombreDeConvives'),
+            TextField::new('mentionDesAllergie'),
         ];
 
         return $fields;

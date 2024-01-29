@@ -7,16 +7,25 @@ use App\Entity\User;
 use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ClientInscriptionType extends AbstractType
 {
+    public function __construct(private  UserPasswordHasherInterface $passHasher)
+    {
+        
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -32,16 +41,35 @@ class ClientInscriptionType extends AbstractType
             ->add('nombreDeConvives', NumberType::class, [
                 'label' => 'Nombres de convives :',
             ])
-            ->add('mentionDesAllergies', EntityType::class, [
-                    'class' => Allergie::class,
-                    'choice_label' => 'nom',
-                    'label' => 'Mention des allergies :',
-                    'expanded' => false,
-                    'multiple' => true,
+            ->add('mentionDesAllergie', TextType::class, [
+                'label' => "J'ai une ou plusieurs allergies : ",
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "S'inscrire",
             ])
+            ->addEventListener(FormEvents::POST_SUBMIT, function (PostSubmitEvent $event): void {
+               
+                // Récupérer les données du formulaire
+                $data = $event->getData();
+                $password = $event->getForm()->getData()->getPassword();
+
+                $inscription = new User();
+                
+                $data->setPassword(
+                    $this->passHasher->hashPassword($inscription, $password)
+                );
+        
+                $data->setRawPassword( $password);
+
+                // Role des clients
+                $role = ['ROLE_USER'];
+                $data->setRoles($role);
+
+                // Définir la date
+                $now = new DateTime('now');
+                $data->setCreatedAt($now);
+
+            })
         ;
     }
 
