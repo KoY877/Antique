@@ -31,16 +31,11 @@ class Reservation
     #[ORM\Column(length: 150)]
     private ?string $minutePrevue = null;
 
-    #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'reservations')]
-    private Collection $mentionDesAllergies;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    public function __construct()
-    {
-        $this->mentionDesAllergies = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $mentionDesAllergies = null;
 
     public function getId(): ?int
     {
@@ -107,30 +102,6 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Allergie>
-     */
-    public function getMentionDesAllergies(): Collection
-    {
-        return $this->mentionDesAllergies;
-    }
-
-    public function addMentionDesAllergy(Allergie $mentionDesAllergy): static
-    {
-        if (!$this->mentionDesAllergies->contains($mentionDesAllergy)) {
-            $this->mentionDesAllergies->add($mentionDesAllergy);
-        }
-
-        return $this;
-    }
-
-    public function removeMentionDesAllergy(Allergie $mentionDesAllergy): static
-    {
-        $this->mentionDesAllergies->removeElement($mentionDesAllergy);
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -139,6 +110,18 @@ class Reservation
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getMentionDesAllergies(): ?string
+    {
+        return $this->mentionDesAllergies;
+    }
+
+    public function setMentionDesAllergies(string $mentionDesAllergies): static
+    {
+        $this->mentionDesAllergies = $mentionDesAllergies;
 
         return $this;
     }

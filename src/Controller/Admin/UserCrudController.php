@@ -61,9 +61,8 @@ class UserCrudController extends AbstractCrudController
                         ])
                         ->setRequired($pageName === Crud::PAGE_NEW)
                         ->onlyOnForms(),
-            NumberField::new('nombreDeConvives')->onlyOnIndex(),
-            AssociationField::new('mentionDesAllergies')
-                            ->onlyOnIndex(),
+            NumberField::new('nombreDeConvives'),
+            TextField::new('mentionDesAllergie'),
         ];
 
         return $fields;

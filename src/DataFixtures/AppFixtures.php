@@ -81,17 +81,6 @@ class AppFixtures extends Fixture
             $manager->persist($plat);
         }
 
-        // Creation 3 Allergies
-        for ($i = 0; $i < 4 ; $i++) {
-            $allergie = new Allergie();
-
-            $allergie->setNom($faker->numerify('allergie-####'))
-                    ->setSlug($faker->numerify('allergie-####'))
-                    ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'));
-
-            $manager->persist($allergie);
-        }
-
         // Creation de 4 reservations
         for ($i = 0; $i < 5 ; $i++) {
             $reservation = new Reservation();
@@ -101,7 +90,7 @@ class AppFixtures extends Fixture
                         ->setDate($faker->datetime('now'))
                         ->setHeurePrevue($faker->numberBetween($min = 12, $max = 23))
                         ->setMinutePrevue($faker->numberBetween($min = 1, $max = 59))
-                        ->addMentionDesAllergy($allergie)
+                        ->setMentionDesAllergies($faker->numerify('allergie-####'))
                         ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
             ;
     

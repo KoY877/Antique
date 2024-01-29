@@ -9,7 +9,9 @@ use App\Entity\Image;
 use App\Entity\Menu;
 use App\Entity\NombreDeConvive;
 use App\Entity\Plat;
+use App\Entity\Reservation;
 use App\Entity\User;
+use App\Form\ReservationType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -50,11 +52,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Type d´allergie', 'fa-solid fa-hand-dots', Allergie::class);
         yield MenuItem::linkToCrud('Catégories de plats', 'fa-solid fa-list', Category::class);
         yield MenuItem::linkToCrud('Galerie', 'fa-solid fa-image', Image::class);
         yield MenuItem::linkToCrud('Carte', 'fa-solid fa-bowl-food', Plat::class);
         yield MenuItem::linkToCrud('Menus', 'fa-solid fa-bars', Menu::class);
+        yield MenuItem::linkToCrud('Réservation', 'fa-solid fa-wine-glass-empty', Reservation::class);
         yield MenuItem::linkToCrud('Heure d´ouvertures', 'fa-solid fa-clock', Horaire::class);
         yield MenuItem::linkToCrud('Nombre de places', 'fa-solid fa-people-roof', NombreDeConvive::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);

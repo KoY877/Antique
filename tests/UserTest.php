@@ -17,12 +17,14 @@ class UserTest extends TestCase
         $user->setEmail('user@test.com')
             ->setPassword('password')
             ->setNombreDeConvives(3)
+            ->setMentionDesAllergie('allergie')
             ->setCreatedAt($datetime)
         ;
 
         $this->assertTrue($user->getEmail() === 'user@test.com');
         $this->assertTrue($user->getPassword() === 'password');
         $this->assertTrue($user->getNombreDeConvives() === 3);
+        $this->assertTrue($user->getMentionDesAllergie() === 'allergie');
         $this->assertTrue($user->getCreatedAt() === $datetime);
     }
 
@@ -40,6 +42,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->getEmail() === 'false@test.com');
         $this->assertFalse($user->getPassword() === 'false');
         $this->assertFalse($user->getNombreDeConvives() === 5);
+        $this->assertFalse($user->getMentionDesAllergie() === 'false');
         $this->assertFalse($user->getCreatedAt() === new Datetime());
     }
 
@@ -53,21 +56,8 @@ class UserTest extends TestCase
         $this->assertEmpty($user->getEmail());
         $this->assertEmpty($user->getPassword());
         $this->assertEmpty($user->getNombreDeConvives());
+        $this->assertEmpty($user->getMentionDesAllergie());
         $this->assertEmpty($user->getCreatedAt());
-    }
-
-    public function testAddGetRemoveAllergie()
-    {
-        $user = new User();
-        $allergie = new Allergie();
-
-        $this->assertEmpty($user->getMentionDesAllergies());
-
-        $user->addMentionDesAllergy($allergie);
-        $this->assertContains($allergie, $user->getMentionDesAllergies());
-
-        $user->removeMentionDesAllergy($allergie);
-        $this->assertEmpty($user->getMentionDesAllergies());
     }
 
 }

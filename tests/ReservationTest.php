@@ -63,21 +63,6 @@ class ReservationTest extends TestCase
         $this->assertEmpty($reservation->getCreatedAt());
     }
     
-
-
-    public function testAddGetRemoveAllergie()
-    {
-        $reservation = new Reservation();
-        $allergie = new Allergie();
-
-        $this->assertEmpty($reservation->getMentionDesAllergies());
-
-        $reservation->addMentionDesAllergy($allergie);
-        $this->assertContains($allergie, $reservation->getMentionDesAllergies());
-
-        $reservation->removeMentionDesAllergy($allergie);
-        $this->assertEmpty($reservation->getMentionDesAllergies());
-    }
 }
 
 
