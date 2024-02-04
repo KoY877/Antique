@@ -9,12 +9,14 @@ use DateTime;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
+use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
@@ -104,10 +106,13 @@ class ReservationType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
         ])
+        ->add('allergie', ChoiceType::class, [
+            'label' => "Vous avez des allergies ?",
+            'choices' => [ 'Non' => false, 'Oui' => true],
+            'expanded' => true,
+        ])
         ->add('mentionDesAllergies', TextType::class, [
-            'required' => true,
-            'label' => 'Avez-vous des allergies ? ',
-            'data' => $allergie,
+            'label' => "J´ai un ou plusieurs allergies :",
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Réserver',
@@ -116,13 +121,13 @@ class ReservationType extends AbstractType
                
             // Récupérer les données du formulaire
             $data = $event->getData();
-           
+
             // Définir la date
             $now = new DateTime('now');
             $data->setCreatedAt($now);
 
-        })
-        ;
+        });
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
