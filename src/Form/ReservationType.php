@@ -3,13 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
+use App\Repository\NombreDeConviveRepository;
+use App\Repository\ReservationRepository;
 use DateTime;
-use DateTimeImmutable;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Event\PostSetDataEvent;
 use Symfony\Component\Form\Event\PostSubmitEvent;
-use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -19,19 +18,37 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class ReservationType extends AbstractType
 {
-    public function __construct(private Security $security)
-    {
+    public function __construct(private Security $security, 
+            private ReservationRepository $reservationRepository,
+            private  NombreDeConviveRepository $nombreDeConviveRepository,
+    ) {
         
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {   
+        // Récupérer les données de l´utilisateurs
         $user = $this->security->getUser();
-        $nombreConvive = $user->getNombreDeConvives();
-        $allergie = $user->getMentionDesAllergie();
+
+        $nombreConvive = 0;
+        $allergie = 0;
+
+        if ( isset($user)) {
+            $nombreConvive = $user->getNombreDeConvives();
+            $allergie = $user->getMentionDesAllergie();
+        }
+
+        // Récupérer le nombre de place de la base de données
+        $nombreDePlaceOccuper = $this->reservationRepository->nombreTotalDeConvive();
+        $placeDisponible = $this->nombreDeConviveRepository->nombreDePlaceDisponible();
+
+        // calcul du nombre de place restant
+        $nombreDePlaceRestant = intval(implode("",$placeDisponible)) - intval(implode("",$nombreDePlaceOccuper));
+        
 
         $builder
         ->add('nom', TextType::class, [
@@ -39,7 +56,14 @@ class ReservationType extends AbstractType
         ])
         ->add('nombreDeConvive', NumberType::class, [
             'label' => 'Nombres de convives :',
-            'data' => $nombreConvive
+           'data' => $nombreConvive,
+           'constraints' => [
+                new LessThanOrEqual([
+                    'value' => $nombreDePlaceRestant,
+                    'message' => 'Il ne reste que : '. $nombreDePlaceRestant . ' places',
+                ])
+           ]
+           
         ])
         ->add('date', DateType::class, [ 
             'label' => 'Date',
@@ -53,7 +77,7 @@ class ReservationType extends AbstractType
                         ]),
                     ],
         ])
-        ->add('heurePrevue', ChoiceType::class, [
+        ->add('heure', ChoiceType::class, [
             'label' => 'Heure',
             'choices' => [
                 '12' => '12',
@@ -68,7 +92,7 @@ class ReservationType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
         ])
-        ->add('minutePrevue', ChoiceType::class, [
+        ->add('minute', ChoiceType::class, [
             'label' => 'Minute',
             'required' => true,
             'choices' => [
@@ -81,14 +105,14 @@ class ReservationType extends AbstractType
                 'multiple' => false,
         ])
         ->add('mentionDesAllergies', TextType::class, [
-            'required' => false,
-            'label' => 'J\'ai une ou plusieurs allergies : ',
+            'required' => true,
+            'label' => 'Avez-vous des allergies ? ',
             'data' => $allergie,
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Réserver',
         ])
-        ->addEventListener(FormEvents::POST_SUBMIT, function (PostSubmitEvent $event): void {
+        ->addEventListener(FormEvents::POST_SUBMIT, function (PostSubmitEvent $event): void { // Ajouter la date avant l´enrégistrement dans la DB
                
             // Récupérer les données du formulaire
             $data = $event->getData();

@@ -4,65 +4,35 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\NombreDeConviveRepository;
+use App\Repository\ReservationRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
     public function index(
-                Request $request, 
-                PersistenceManagerRegistry $doctrine
+                Request $request,
+                PersistenceManagerRegistry $doctrine,
+                       
     ): Response
     {
         $reservation = new Reservation();
 
         $form = $this->createForm(ReservationType::class, $reservation);
-        // $form = $this->createFormBuilder()
-        //     ->add('nom', TextType::class, [
-        //         'label' => 'Nom : ',
-        //     ])
-        //     ->add('nombreDeConvive', NumberType::class, [
-        //         'label' => 'Nombres de convives :',
-        //     ])
-        //     ->add('date', DateType::class, [ 
-        //         'label' => "Date : ",
-        //     ])
-        //     ->add('heurePrevue', TextType::class)
-        //     ->add('minutePrevue', TextType::class)
-        //     ->add('mentionDesAllergies', TextType::class, [
-        //         'label' => 'J\'ai une ou plusieurs allergies : '
-        //     ])
-        //     ->add('submit', SubmitType::class, [
-        //         'label' => 'S\'inscrire',
-        //     ])
-        //     ->getForm()
-        // ;
+       
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            // $infoSaisi = $form->getData();
-
-            // $reservation = new Reservation();
-
-            // $reservation->setNom($infoSaisi['nom']);
-            // $reservation->setNombreDeConvive($infoSaisi['nombreDeConvive']);
-            // $reservation->setDate( $infoSaisi['date']);
-            // $reservation->setHeurePrevue($infoSaisi['heurePrevue']);
-            // $reservation->setMinutePrevue($infoSaisi['minutePrevue']);
-
             //  Date de création
             $now = new DateTime();
             $reservation->setCreatedAt($now);
@@ -78,5 +48,27 @@ class ReservationController extends AbstractController
         return $this->render('reservation/index.html.twig', [
             'reservation' => $form->createView(),
         ]);
+    }
+
+    #[Route('/-traitement', name: 'traitement')]
+    public function traitement(
+        ReservationRepository $reservationRepository,
+        NombreDeConviveRepository $nombreDeConviveRepository,
+        Security $security
+    ): Response {
+
+        //  Récupération les donnéees de l'utilisateur
+        $user = $security->getUser();
+        // Si l'utilisateur n'est pas connecté on le redirige vers la page d'authentification
+        // if (!$user) {
+        //     return $this->redirectToRoute('app_login');
+        // }
+
+        $nombre = $reservationRepository->nombreTotalDeConvive();
+        $place = $nombreDeConviveRepository->nombreDePlaceDisponible();
+
+        $query = array_merge($nombre, $place);
+
+        return new JsonResponse($query);
     }
 }

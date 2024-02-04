@@ -88,8 +88,8 @@ class AppFixtures extends Fixture
             $reservation->setNom($faker->numerify('client-####'))
                         ->setNombreDeConvive($faker->numberBetween($min = 1, $max = 50))
                         ->setDate($faker->datetime('now'))
-                        ->setHeurePrevue($faker->numberBetween($min = 12, $max = 23))
-                        ->setMinutePrevue($faker->numberBetween($min = 1, $max = 59))
+                        ->setHeure($faker->numberBetween($min = 12, $max = 23))
+                        ->setMinute($faker->numberBetween($min = 1, $max = 59))
                         ->setMentionDesAllergies($faker->numerify('allergie-####'))
                         ->setCreatedAt($faker->dateTimeBetween('-6 month', 'now'))
             ;

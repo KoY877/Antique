@@ -21,20 +21,19 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
-//    /**
-//     * @return Reservation[] Returns an array of Reservation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+
+   /**
+    * @return Reservation[] Returns an array of Reservation objects
+    */
+   public function nombreTotalDeConvive(): array
+   {
+       return $this->createQueryBuilder('r')
+            ->select('SUM(r.nombreDeConvive) as nombre')
+            ->getQuery()
+            ->getSingleResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Reservation
 //    {
@@ -45,4 +44,5 @@ class ReservationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }
