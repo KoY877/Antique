@@ -21,6 +21,15 @@ class NombreDeConviveRepository extends ServiceEntityRepository
         parent::__construct($registry, NombreDeConvive::class);
     }
 
+    public function nombreDePlaceDisponible(): array
+    {
+        return $this->createQueryBuilder('n')
+            ->select('SUM(n.nombreDePlaceDisponible) as place')
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
 //    /**
 //     * @return NombreDeConvive[] Returns an array of NombreDeConvive objects
 //     */
@@ -36,13 +45,5 @@ class NombreDeConviveRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?NombreDeConvive
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    
 }

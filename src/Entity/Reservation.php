@@ -26,10 +26,10 @@ class Reservation
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $heurePrevue = null;
+    private ?string $heure = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $minutePrevue = null;
+    private ?string $minute = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -78,26 +78,26 @@ class Reservation
         return $this;
     }
 
-    public function getHeurePrevue(): ?string
+    public function getHeure(): ?string
     {
-        return $this->heurePrevue;
+        return $this->heure;
     }
 
-    public function setHeurePrevue(string $heurePrevue): static
+    public function setHeure(string $heure): static
     {
-        $this->heurePrevue = $heurePrevue;
+        $this->heure = $heure;
 
         return $this;
     }
 
-    public function getMinutePrevue(): ?string
+    public function getMinute(): ?string
     {
-        return $this->minutePrevue;
+        return $this->minute;
     }
 
-    public function setMinutePrevue(string $minutePrevue): static
+    public function setMinute(string $minute): static
     {
-        $this->minutePrevue = $minutePrevue;
+        $this->minute = $minute;
 
         return $this;
     }

@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <h2>Réservation</h2>
                 <br>
-                {{form_start (reservation)}}
+                {{form_start (reservation, {'attr': {'id': 'form_js'}})}}
                     <div class="row">
                         <div class="">
                             {{form_row(reservation.nom)}} 
@@ -26,6 +26,7 @@
                         <div class="">
                             {{form_row(reservation.nombreDeConvive)}} 
                         </div>
+                        <div class="" id="error"></div>
                     </div>
                     <div class="row">
                         <div class="">
@@ -33,14 +34,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="row">
                                 <h6>Réservation á : </h6>
-                                <div class="col-md-3 m-0 ">
-                                    {{form_row(reservation.heurePrevue)}} 
+                                <div class="col-2 col-sm-3 m-0 ">
+                                    {{form_row(reservation.heure)}} 
                                 </div>
-                                <div class="col-md-3 m-0 ">
-                                    {{form_row(reservation.minutePrevue)}} 
+                                <div class="col-2 col-sm-3 m-0 ">
+                                    {{form_row(reservation.minute)}} 
                                 </div>
                             </div>
                         </div>
