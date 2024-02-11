@@ -70,8 +70,8 @@ class ReservationType extends AbstractType
         ->add('date', DateType::class, [ 
             'label' => 'Date',
                     'html5' => false,
-                    'input' => 'datetime_immutable',
-                    'widget' => 'choice',
+                    'input' => 'datetime',
+                    'attr' =>  ['class' => 'js-datepicker'],
                     'constraints' => [
                         new GreaterThanOrEqual([
                             'value' => 'now', 

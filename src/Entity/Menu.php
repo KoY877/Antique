@@ -17,7 +17,7 @@ class Menu
     #[ORM\Column(length: 255)]
     private ?string $formule = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column]

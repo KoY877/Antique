@@ -36,7 +36,12 @@ class PlatCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nom'),
-            TextEditorField::new('description'),
+            TextEditorField::new('description')->setTrixEditorConfig([
+                'blockAttributes' => [
+                    'default' => ['tagName'=> 'p','attr' => ['class' => 'pCarte']]
+
+                ]
+            ]),
             NumberField::new('prix'),
             AssociationField::new('categories'),
             SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),

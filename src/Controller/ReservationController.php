@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\HoraireRepository;
 use App\Repository\NombreDeConviveRepository;
 use App\Repository\ReservationRepository;
 use DateTime;
@@ -21,9 +22,10 @@ class ReservationController extends AbstractController
     public function index(
                 Request $request,
                 PersistenceManagerRegistry $doctrine,
-                       
+                HoraireRepository $horaireRepository
     ): Response
     {
+        $horaires = $horaireRepository->findAll();
         $reservation = new Reservation();
 
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -47,6 +49,7 @@ class ReservationController extends AbstractController
     
         return $this->render('reservation/index.html.twig', [
             'reservation' => $form->createView(),
+            'horaires' =>  $horaires,
         ]);
     }
 

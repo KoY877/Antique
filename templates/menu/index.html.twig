@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block csrf_token_widget %}
+    <div class="container text-center mt-5 containerHeight">
+        <h2 class="color">Menu</h2>
+
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8 p-4">
+                {% for menu in menus %}
+                    <span class="hCarte">{{menu.formule}}</span>
+                    <div class="pMenu">{{menu.description | raw}}</div>
+                    <div class="prixMenu mb-4">{{menu.prix}} €</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block csrf_token_widget %}
+    <div class="container text-center mt-5 containerHeight">
+        <h2 class="color">Carte</h2>
+        <div class="row">
+            <ul class="nav justify-content-center mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link categorie" href="{{path('app_carte')}}">Tous</a>
+                </li>
+                {% for categorie in categories %}                   
+                    <li class="nav-item ">
+                        <a class="nav-link categorie" href="{{'/carte/categorie/'}}{{categorie.nom}}">{{categorie.nom}}</a>
+                    </li>                  
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div class="carteCategoryTitel text-center">
+                    {{categorie}}</h6>
+                </div> 
+
+                {% for query in querys %}
+                    {% include "partials/carte/_filtreCategorie.html.twig" %} 
+                {% endfor %}
+            </div>
+
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

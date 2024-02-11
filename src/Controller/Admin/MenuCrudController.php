@@ -33,7 +33,12 @@ class MenuCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('formule'),
-            TextEditorField::new('description'),
+            TextEditorField::new('description')->setTrixEditorConfig([
+                'blockAttributes' => [
+                    'default' => ['tagName'=> 'p','attr' => ['class' => 'pMenu']]
+
+                ]
+            ]),
             NumberField::new('prix'),
             SlugField::new('slug')->setTargetFieldName('formule')->hideOnIndex(),
             DateField::new('createdAt')->hideOnForm(),

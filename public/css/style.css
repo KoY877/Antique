@@ -1,6 +1,403 @@
+html, body {
+	font-family: "Hind Vadodara", sans-serif;
+	font-size: 18px;
+	height: 100vh;
+}
+
+.containerHeight {
+	min-height: 60vh;
+}
+
+h2 {
+	font-family: "Montserrat", sans-serif;
+	font-weight: 600;
+}
+
+.header {
+    background-color: #08192d;  
+}
+
+.carousel-inner {
+	height: 80vh;
+}
 
 
+.logo {
+	width: 170px;
+}
+
+.icons {
+	padding-right: 90px;
+}
+    
+.Color {
+    color: #ffffff;
+}
+
+.Color:hover{
+  color: #fc0254;
+}
+
+.Color2 {
+    color: #fc0254;
+}
+
+.Color2:hover{
+  color: #ffffff;
+}
+
+.slider {
+	background-color: #0a183d;	
+}
+
+.slider-text {
+	color: #ffffff;
+	margin-top: 60px;
+}
+
+.slider-text h2 {
+	font-weight: 600;
+	font-size: 70px;
+}
+
+.slider-text span {
+	color: #fc0254;
+}
+
+.button {
+	font-size: 16px;
+	position: relative;
+	margin-top: auto;
+	padding: 1.2em 1.5em 1.5em 1.2em;
+	border: none;
+	border-radius: 2em;
+	transition: all 0.1s linear;
+	box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.1);
+	text-decoration: none;
+	color: #ffffff;
+}
+
+.btn1 {	
+	background-color: #fc0254;
+}
+
+.btn2 {
+	background-color: #383b70;
+}
+
+
+.item {
+	width: 500px; 
+	height: 500px;
+	margin-right: 10px;
+}
+
+.image {
+	width: 600px;
+	height:500px;
+}
+
+
+.tableImage {
+	width: 100px;
+	height: 50px;
+}
+
+.link {
+	text-decoration: none;
+}
+
+.danger {
+	color: red;
+}
+
+.image-container {
+	position: relative; /* pour que la position du texte soit relative à l'image */
+  }
+  
+.image-info {
+	position: absolute; /* pour positionner le texte par rapport à l'image */
+	top: 50%; /* pour centrer le texte verticalement */
+	left: 50%; /* pour centrer le texte horizontalement */
+	transform: translate(-50%, -50%); /* pour centrer le texte exactement */
+	z-index: 1; /* pour placer le texte au-dessus de l'image */
+	background-color: rgba(0, 0, 0, 0.5); /* pour ajouter un fond semi-transparent */
+	color: #fff; /* pour définir la couleur du texte */
+	padding: 10px; /* pour ajouter de l'espace autour du texte */
+	font-size: 16px; /* pour définir la taille du texte */
+	font-family: sans-serif; /* pour définir la police du texte */
+	opacity: 0; /* pour masquer le texte par défaut */
+  	transition: opacity 0.3s ease-in-out;
+}
+
+.image-container:hover .image-info {
+	opacity: 1; /* pour afficher le texte au survol de l'image */
+}
+
+.border {
+	background-color: #198754;
+	color: #fff;
+	border: none;
+	width: 25px;
+	height: 25px;
+	border-radius: 50% 50%;
+	position: absolute;
+	text-align: center;
+	padding-bottom: 2px;
+}
+
+.categorie {
+	color: #0a183d;
+	animation: fademove 2.5s infinite;
+
+	font-weight: 600;
+}
+
+
+p {
+	color: #6a7080;
+}
+
+.color {
+	color: #fc0254;
+}
+
+.font_H2 {
+	font-size: 50px;
+}
+
+.carte {
+	font-weight: 600;
+	font-size: 70px;
+}
+
+.carteCategoryTitel
+{
+	border: 1px solid #0a183d;
+	background-color: #0a183d;
+	color: #ffffff;
+	padding-top: 10px;
+	margin-bottom: 15px;
+	font-size: 1.3em;
+	font-weight: 600;
+}
+
+.hCarte {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	text-align: start;
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+.pCarte p {
+	text-align: start;	
+	display: inline-block;
+	width: auto;
+	vertical-align: top;
+	font-size: 15px;
+}
+
+.pMenu p {
+	font-size: 15px;
+	justify-content: center;
+	font-style: italic;
+}
+
+.prix {
+	font-size: 1.1em;
+	font-weight: 600;
+	text-align: right;
+}
+
+.prixMenu {
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+.reserver {
+	text-decoration: none;
+	color: #fc0254;
+}
+
+.button2 {
+	font-size: 16px;
+	position: relative;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	border: none;
+	border-radius: 2em;
+	transition: all 0.1s linear;
+	box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.1);
+	text-decoration: none;
+	color: #ffffff;
+}
+
+
+.mini {
+	font-size: 11px;
+
+}
+
+.spacing {
+	min-height: 40px;
+}
+
+/*
+*  Page reservation
+*/
+.nbreConvive {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+.error {
+	margin-top: -10px;
+	font-size: 14px;
+}
 
 #mention_allergie {
     display: none;
 }
+
+/* ----------------
+Responsive
+ -------------------*/
+
+.footer-section {
+	background: #0a183d;
+	padding: 50px;
+}
+
+.footer-widget {
+	padding-top: 2px;
+}
+
+.footer-widget h2 {
+	font-size: 16px;
+	color: #fff;
+	text-transform: uppercase;
+	margin-bottom: 30px;
+}
+
+.footer-widget ul {
+	list-style: none;
+}
+
+.footer-widget ul li {
+	display: inline-block;
+	color: #6a7080;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+.footer-widget ul li a {
+	display: inline-block;
+	color: #6a7080;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+.horaire {
+	color: #505565;
+	font-size: 14px;
+}
+
+.copyright {
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: 500;
+	color: #505565;
+	padding: 10px 0 25px;
+}
+
+.social-links a {
+	display: inline-block;
+	color: #6a7080;
+	font-size: 18px;
+	margin-right: 35px;
+}
+
+.space1 {
+	padding-left: 40px;
+}
+
+.space2 {
+	padding-left: 18px;
+}
+
+.space3 {
+	padding-left: 8px;
+}
+
+.space4 {
+	padding-left: 28px;
+}
+
+.col_margin {
+	padding : 0;
+}
+
+
+
+@media (max-width: 575.98px) 
+{
+	
+
+	.commande
+	{
+		margin-top: 60px;
+	}
+
+	.slider-text {
+		margin-top: 5px;
+	}
+
+	.slider-text h2 {
+		font-weight: 500;
+		font-size: 50px;
+	}
+
+	.button {
+		font-size: 13px;
+	}
+}
+
+@media (max-width: 767.98px) {
+	
+	
+	.button {
+		font-size: 13px;
+	}
+}
+
+@media (max-width: 991.98px) {
+	
+	.slider-text {
+		margin-top: 15px;
+	}
+
+	.slider-text h2 {
+		font-weight: 500;
+		font-size: 50px;
+	}
+
+	.button {
+		font-size: 13px;
+	}
+}
+
+@media (max-width: 1199.98px) {
+	
+	
+	.slider-text {
+		margin-top: 60px;
+	}
+}
+
+@media (max-width: 1399.98px) {
+	
+	
+	.slider-text {
+		margin-top: 60px;
+	}
+}
+

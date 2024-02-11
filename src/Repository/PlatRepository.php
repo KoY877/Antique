@@ -36,13 +36,14 @@ class PlatRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Plat
+//    public function findCategorieOfPlats($value): ?Plat
 //    {
 //        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//            ->andWhere('p.categories = :val')
+//            ->join()
 //            ->setParameter('val', $value)
 //            ->getQuery()
-//            ->getOneOrNullResult()
+//            ->getResult()
 //        ;
 //    }
 }

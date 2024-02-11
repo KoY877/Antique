@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+
+{% block csrf_token_widget %} 
+    <div class="container-fluid p-0">
+        <div class="row">
+            {% include "partials/_header.html.twig" %}
+        </div>
+    </div>   
+    <div class="container ">
+        <div class="row pt-5 text-center">
+            <h2 class="color">Galerie</h2>
+            {% for image in images %}
+                {% include "partials/galerie/_galerie.html.twig" %}
+            {% endfor %}
+        </div>    
+        <br>
+            <div class="row pt-5 pb-5">
+                {% include "partials/_pub.html.twig" %}
+            </div> 
+        <br>
+    </div>
+{% endblock %}
+

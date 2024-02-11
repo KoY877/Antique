@@ -1,0 +1,57 @@
+ <!-- Footer section -->
+ <footer class="footer-section mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7 order-lg-2 mb-2">
+                <div class="row">
+                    <div class="col-sm-1 mb-4">
+                       
+                    </div>
+                    <div class="col-sm-7 mb-4">
+                        <div class="footer-widget">
+                            <h2>Nos horaire d´ouverture</h2>
+                             
+                            {% for horaire in horaires %}
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 horaire">
+                                        {{horaire.nomDuJour}}    
+                                    </div>  
+                                    <div class="col-md-8 col-sm-8 horaire"> 
+                                        {{horaire.midi}}  &nbsp; / &nbsp; {{horaire.soir}} 
+                                    </div>
+                                </div>
+                                                                     
+                            {% endfor %}                                       
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-4">
+                        <div class="footer-widget ">
+                            <h2 class="contact">A propos</h2>
+                            <ul class="col_margin">
+                                <li><a href="" class="link">Contact</a></li> <br>
+                                <li><a href="" class="link">Mention légales</a></li> &nbsp;
+                                <li><a href="" class="link">Politique de confidentialité</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 order-lg-1 mb-2">
+                <a class="navbar-brand Color2" href="#">Quai Antique</a>
+                <div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="bi bi-arrow-through-heart-fill"></i> by K. Y. Monni
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+                <div class="social-links">
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-pinterest"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>				
+        </div>            
+    </div>
+</footer>
+<!-- Footer section end -->  
