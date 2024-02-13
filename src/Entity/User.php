@@ -58,8 +58,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $nombreDeConvives = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $mentionDesAllergie = null;
+    #[ORM\Column(length: 255)]
+    private ?string $mentionDesAllergies = null;
+
+    #[ORM\Column]
+    private ?bool $allergie = null;
 
     public function getId(): ?int
     {
@@ -168,15 +171,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getMentionDesAllergie(): ?string
+    public function getMentionDesAllergies(): ?string
     {
-        return $this->mentionDesAllergie;
+        return $this->mentionDesAllergies;
     }
 
-    public function setMentionDesAllergie(?string $mentionDesAllergie): static
+    public function setMentionDesAllergies(string $mentionDesAllergies): static
     {
-        $this->mentionDesAllergie = $mentionDesAllergie;
+        $this->mentionDesAllergies = $mentionDesAllergies;
+
+        return $this;
+    }
+    public function isAllergie(): ?bool
+    {
+        return $this->allergie;
+    }
+
+    public function setAllergie(bool $allergie): static
+    {
+        $this->allergie = $allergie;
 
         return $this;
     }

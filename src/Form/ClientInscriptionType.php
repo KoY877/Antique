@@ -8,6 +8,7 @@ use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -41,8 +42,13 @@ class ClientInscriptionType extends AbstractType
             ->add('nombreDeConvives', NumberType::class, [
                 'label' => 'Nombres de convives :',
             ])
-            ->add('mentionDesAllergie', TextType::class, [
-                'label' => "J'ai une ou plusieurs allergies : ",
+            ->add('allergie', ChoiceType::class, [
+                'label' => "Vous avez des allergies ?",
+                'choices' => [ 'Non' => false, 'Oui' => true],
+                'expanded' => true,
+            ])
+            ->add('mentionDesAllergies', TextType::class, [
+                'label' => "J´ai un ou plusieurs allergies :",
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "S'inscrire",

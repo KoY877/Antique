@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ClientInscriptionType;
+use App\Repository\HoraireRepository;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +16,12 @@ class InscriptionController extends AbstractController
     #[Route('/inscription', name: 'app_inscription')]
     public function index(
                 Request $request, 
-                PersistenceManagerRegistry $doctrine): Response
-    {   
+                PersistenceManagerRegistry $doctrine,
+                HoraireRepository $horaireRepository
+    ): Response {   
+
+        $horaires = $horaireRepository->findAll();
+
         $inscription = new User();
 
         $form = $this->createForm(ClientInscriptionType::class, $inscription);
@@ -34,6 +39,7 @@ class InscriptionController extends AbstractController
        
         return $this->render('inscription/index.html.twig', [
             'inscription' => $form->createView(),
+            'horaires' => $horaires
         ]);
     }
 }
