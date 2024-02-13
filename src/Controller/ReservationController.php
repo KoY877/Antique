@@ -12,12 +12,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
 {
+    #[Route('/connexion', name: 'app_connexion')]
+    public function redirection(
+                HoraireRepository $horaireRepository
+    ): Response
+    {
+        $horaires = $horaireRepository->findAll();
+    
+        return $this->render('reservation/choix.html.twig', [
+            
+            'horaires' =>  $horaires,
+        ]);
+    }
+
     #[Route('/reservation', name: 'app_reservation')]
     public function index(
                 Request $request,
@@ -57,17 +69,12 @@ class ReservationController extends AbstractController
     public function traitement(
         ReservationRepository $reservationRepository,
         NombreDeConviveRepository $nombreDeConviveRepository,
-        Security $security
     ): Response {
 
-        //  Récupération les donnéees de l'utilisateur
-        $user = $security->getUser();
-        // Si l'utilisateur n'est pas connecté on le redirige vers la page d'authentification
-        // if (!$user) {
-        //     return $this->redirectToRoute('app_login');
-        // }
-
+        // récupérer le nombre de place occupée
         $nombre = $reservationRepository->nombreTotalDeConvive();
+
+        // récupérer le nombre de place disponible
         $place = $nombreDeConviveRepository->nombreDePlaceDisponible();
 
         $query = array_merge($nombre, $place);

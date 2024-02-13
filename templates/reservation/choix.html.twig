@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block csrf_token_widget %}
+    <br>
+    <div class="container containerHeight">
+        <h2>Réservation</h2>
+        
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <p class="mb-4">Veuilez créer un compte. Vous bénéficier de certain champs du formulaire qui seront pré-remplis lors de votre prochaine reservation. </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{'/inscription'}}" class="button btn2 mt-4">Créer un compte</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{'/login'}}" class="button btn2 mt-4">J´ai déja un compte, se connecter</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>        
+    </div>
+{% endblock %}

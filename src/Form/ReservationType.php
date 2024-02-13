@@ -37,13 +37,16 @@ class ReservationType extends AbstractType
         $user = $this->security->getUser();
 
         $nombreConvive = 0;
+        $mentionAllergie = 0;
         $allergie = 0;
 
         if ( isset($user)) {
             $nombreConvive = $user->getNombreDeConvives();
-            $allergie = $user->getMentionDesAllergie();
+            $mentionAllergie = $user->getMentionDesAllergies();
+            $allergie = $user->isAllergie();
         }
 
+       
         // Récupérer le nombre de place de la base de données
         $nombreDePlaceOccuper = $this->reservationRepository->nombreTotalDeConvive();
         $placeDisponible = $this->nombreDeConviveRepository->nombreDePlaceDisponible();
@@ -109,10 +112,12 @@ class ReservationType extends AbstractType
         ->add('allergie', ChoiceType::class, [
             'label' => "Vous avez des allergies ?",
             'choices' => [ 'Non' => false, 'Oui' => true],
+            'data' => $allergie,
             'expanded' => true,
         ])
         ->add('mentionDesAllergies', TextType::class, [
             'label' => "J´ai un ou plusieurs allergies :",
+            'data' => $mentionAllergie,
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Réserver',
