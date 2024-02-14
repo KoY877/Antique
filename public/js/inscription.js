@@ -3,7 +3,6 @@ class GestionAllergieInscription {
         this.allergieInscription = document.getElementById('mention_allergie_Inscription');
         this.mentionAllergieNonInscription = document.getElementById('client_inscription_allergie_0');
         this.mentionAllergieOuiInscription = document.getElementById('client_inscription_allergie_1');
-        this.mentionAllergieInscription = document.getElementById('client_inscription_mentionDesAllergies').value();
         this.initialize();
     }
 

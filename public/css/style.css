@@ -28,6 +28,7 @@ h2 {
 
 .icons {
 	padding-right: 90px;
+	padding-top: 15px;
 }
     
 .Color {
@@ -232,7 +233,6 @@ p {
 	color: #ffffff;
 }
 
-
 .mini {
 	font-size: 11px;
 
@@ -241,6 +241,12 @@ p {
 .spacing {
 	min-height: 40px;
 }
+
+/* Client */
+.profile {
+	margin: 1rem;
+}
+
 
 /*
 *  Page reservation

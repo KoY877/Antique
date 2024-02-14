@@ -3,7 +3,7 @@
 {% block csrf_token_widget %}
     <div class="container text-center mt-5 containerHeight">
         <h2 class="color">Carte</h2>
-        <div class="row">            
+        <div class="row ">            
             <ul class="nav justify-content-center mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link categorie" href="{{path('app_carte')}}">Tous</a>
@@ -15,7 +15,9 @@
                 {% endfor %}
             </ul> 
             
-            <a href="{{'/connexion'}}" class="button btn1">Réserver une table</a>
+            <div class="d-flex justify-content-center">
+                <a href="{{'/connexion'}}" class="button btn1 d-block">Réserver une table</a>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-2"></div>
