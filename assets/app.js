@@ -9,5 +9,5 @@
 import './styles/app.scss';
 
 import './js/reservation.js';
-import './js/inscription.js';
+// import './js/inscription.js';
 

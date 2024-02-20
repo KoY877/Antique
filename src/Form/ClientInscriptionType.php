@@ -49,6 +49,8 @@ class ClientInscriptionType extends AbstractType
             ])
             ->add('mentionDesAllergies', TextType::class, [
                 'label' => "J´ai un ou plusieurs allergies :",
+                'required' => true,
+                
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "S'inscrire",

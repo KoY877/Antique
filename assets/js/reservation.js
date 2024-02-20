@@ -1,6 +1,6 @@
 class GestionAllergie {
     constructor() {
-        this.form = document.getElementById('form_js');
+        this.form = document.getElementById('form_reservation_js');
         this.allergie = document.getElementById('mention_allergie');
         this.mentionAllergieNon = document.getElementById('reservation_allergie_0');
         this.mentionAllergieOui = document.getElementById('reservation_allergie_1');
@@ -14,7 +14,7 @@ class GestionAllergie {
         this.mentionAllergieNon.addEventListener('change', this.handleAllergieNon.bind(this));
         this.mentionAllergieOui.addEventListener('change', this.handleAllergieOui.bind(this));
         // Correction: Utilisation de 'DOMContentLoaded' pour écouter l'événement de chargement de la page
-        document.addEventListener('DOMContentLoaded', this.handleMentionAllergie.bind(this));
+        this.form.addEventListener('DOMContentLoaded', this.handleMentionAllergie.bind(this));
     }
 
     handleMentionAllergie(event) {
@@ -49,8 +49,6 @@ class GestionAllergie {
         }
     }
 }
-
-const gestionAllergie = new GestionAllergie();
 
 class GestionNombreConvives {
     constructor() {
@@ -91,4 +89,8 @@ class GestionNombreConvives {
 }
 
 
+// Instanciation
+const gestionAllergie = new GestionAllergie();
 const gestionNombreConvives = new GestionNombreConvives();
+
+
