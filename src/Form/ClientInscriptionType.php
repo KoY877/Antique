@@ -19,6 +19,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 class ClientInscriptionType extends AbstractType
 {
@@ -30,14 +36,21 @@ class ClientInscriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
+            ->add('email', TextType::class, [
                 'label' => 'Email: ',
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' =>  true,
                 'first_options' => ['label' => 'Mot de passe :'],
-                'second_options' => ['label' => 'Confirmer votre mot de passe :'] 
+                'second_options' => ['label' => 'Confirmer votre mot de passe :'],
+                // 'constraints' => [
+                //     new Callback(['callback' => function ($value, ExecutionContext $executionContext) {
+                //         if ($executionContext->getRoot()['password']->getViewData() !== $value) {
+                //             $executionContext->addViolation("Les  mots de passes ne correspondent pas.");
+                //         }
+                //     }])
+                // ],
             ])
             ->add('nombreDeConvives', NumberType::class, [
                 'label' => 'Nombres de convives :',
