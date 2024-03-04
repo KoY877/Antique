@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Repository\HoraireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/api/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, HoraireRepository $horaireRepository): Response
     {
         // if ($this->getUser()) {
@@ -22,9 +23,16 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+       
+
         $horaires = $horaireRepository->findAll();
 
-        return $this->render('Security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'horaires' => $horaires]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername, 
+            'error' => $error, 
+            'horaires' => $horaires, 
+        ]);
+
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

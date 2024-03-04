@@ -14,8 +14,8 @@ class GestionInscription {
         this.mentionAllergieNonInscription.addEventListener('change', this.handleAllergieNonInscription.bind(this));
         this.mentionAllergieOuiInscription.addEventListener('change', this.handleAllergieOuiInscription.bind(this));
         this.password2.addEventListener('change', this.checkPassword.bind(this));
-    }
-
+    }   
+    
     checkPassword (event){
         event.preventDefault();
         let password1Value = this.password1.value;

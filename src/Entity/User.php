@@ -52,9 +52,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ])]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $nombreDeConvives = null;
 
@@ -63,6 +60,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $allergie = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    // #[ORM\Column(length: 255)]
+    // private ?string $apiToken;
+    // public function __construct() {
+    //     $this->createdAt = new \DateTimeImmutable();
+    //     $this->apiToken = bin2hex(random_bytes(32));
+    // }
 
     public function getId(): ?int
     {
@@ -193,5 +200,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    // public function getApiToken(): ?string
+    // {
+    //     return $this->apiToken;
+    // }
+
+    // public function setApiToken(string $apiToken): static
+    // {
+    //     $this->apiToken = $apiToken;
+
+    //     return $this;
+    // }
 
 }

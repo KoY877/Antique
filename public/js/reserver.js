@@ -4,12 +4,10 @@ class GestionAllergie {
         this.mentionAllergieNon = document.getElementById('reservation_allergie_0');
         this.mentionAllergieOui = document.getElementById('reservation_allergie_1');
         this.mentionAllergie = document.getElementById('reservation_mentionDesAllergies');
-        this.mentionAllergieValue = document.getElementById('reservation_mentionDesAllergies').value;
         this.initialize();
     }
 
     initialize() {
-        
         this.mentionAllergieNon.addEventListener('change', this.handleAllergieNon.bind(this));
         this.mentionAllergieOui.addEventListener('change', this.handleAllergieOui.bind(this));
         // Correction: Utilisation de 'DOMContentLoaded' pour écouter l'événement de chargement de la page

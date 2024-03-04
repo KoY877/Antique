@@ -52,7 +52,7 @@ class CustomAunthenticatorAuthenticator extends AbstractLoginFormAuthenticator
         // Redirection des routes après le login
         if ($this->security->isGranted('ROLE_ADMIN'))
         { 
-            return new RedirectResponse($this->urlGenerator->generate('admin'));
+           return new RedirectResponse($this->urlGenerator->generate('admin'));
         } else {
             return new RedirectResponse($this->urlGenerator->generate('app_reservation'));
         }

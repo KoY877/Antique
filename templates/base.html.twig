@@ -54,7 +54,7 @@
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link  Color2" href="{{'/login'}}">connexion</a>
+                                <a class="nav-link  Color2" href="{{'/api/login'}}">connexion</a>
                             </li>
 
                             <li class="nav-item">
@@ -115,7 +115,30 @@
            
         {# {% endblock %} #}
 
-   <script src="{{asset('js/reserver.js')}}"> </script>
-   <script src="{{asset('js/inscris.js')}}"> </script>
+    <script src="{{asset('js/reserver.js')}}"> </script>
+    <script src="{{asset('js/inscris.js')}}"> </script>
+
+     <script>
+        // Effectuer une requête Ajax pour récupérer le jeton JWT
+        // Assurez-vous d'adapter l'URL à votre configuration
+        fetch('/api/login_check',{
+            method:'GET',
+            headers: {
+                'Authorization' : 'Bearer '+ localStorage.getItem("jwtToken") 
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Récupérer le jeton JWT de la réponse JSON
+                const jwtToken = data.token;
+
+                // Stocker le jeton JWT dans le LocalStorage
+                localStorage.setItem('jwtToken', jwtToken);
+
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération du jeton JWT:', error);
+            });
+    </script>
     </body>
 </html>
