@@ -1,3 +1,6 @@
+// Import all of Bootstrap's CSS
+@import  "bootstrap/scss/bootstrap.scss";
+
 html, body {
 	font-family: "Hind Vadodara", sans-serif;
 	font-size: 18px;
@@ -257,13 +260,15 @@ p {
 }
 .error {
 	margin-top: -10px;
-	margin-bottom: 10px;
 	font-size: 14px;
 }
 
-#mention_allergie, #mention_allergie_Inscription{
+#mention_allergie{
     display: none;
-}
+} 
+
+
+
 
 /* ----------------
 Responsive
@@ -407,4 +412,5 @@ Responsive
 		margin-top: 60px;
 	}
 }
+
 

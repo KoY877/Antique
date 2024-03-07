@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Email()]
+    #[Email(mode: "strict")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $mentionDesAllergies = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $allergie = null;
 
     public function getId(): ?int

@@ -1,6 +1,5 @@
 class GestionAllergie {
     constructor() {
-        this.form = document.getElementById('form_js');
         this.allergie = document.getElementById('mention_allergie');
         this.mentionAllergieNon = document.getElementById('reservation_allergie_0');
         this.mentionAllergieOui = document.getElementById('reservation_allergie_1');
